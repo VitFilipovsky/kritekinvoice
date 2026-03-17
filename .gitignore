@@ -1,0 +1,11 @@
+# Docker / runtime data (do not commit)
+volumes/
+
+# OS & IDE
+.DS_Store
+.idea/
+*.swp
+*.swo
+
+# Optional: uncomment if you add node at repo root
+# node_modules/

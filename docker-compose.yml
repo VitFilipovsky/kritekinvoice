@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+    php:
+        container_name: kritekinvoice_php
+        build:
+            context: ./docker/php
+        volumes:
+            - ".:/var/www/html"
+        ports:
+            - 80:80
+        depends_on:
+            - database
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
+    database:
+        container_name: kritekinvoice_mysql
+        build:
+            context: ./docker/mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+        ports:
+            - 3306:3306
+        volumes:
+            - './volumes/mariadb/:/var/lib/mysql'
+            - './migrations/:/home/migrations'
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+    nodejs:
+        container_name: kritekinvoice_node
+        build:
+            context: ./docker/nodejs
+        volumes:
+            - "./:/var/www/html"
+        depends_on:
+            - php
+        ports:
+            - 4200:4200
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+volumes:
+    my-datavolume:
