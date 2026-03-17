@@ -20,6 +20,7 @@ class InvoiceType extends AbstractType
             ->add('invoiceDate', DateType::class, [
                 'label' => 'Invoice date',
                 'widget' => 'single_text',
+                'input' => 'datetime_immutable',
             ])
             ->add('invoiceNumber', IntegerType::class, [
                 'label' => 'Invoice number',
