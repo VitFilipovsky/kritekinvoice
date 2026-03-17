@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Invoice #{{ invoice.invoiceNumber }}{% endblock %}
+
+{% block body %}
+    <h1>Invoice #{{ invoice.invoiceNumber }}</h1>
+
+    <dl>
+        <dt>Invoice date</dt>
+        <dd>{{ invoice.invoiceDate|date('Y-m-d') }}</dd>
+        <dt>Customer ID</dt>
+        <dd>{{ invoice.customerId }}</dd>
+    </dl>
+
+    <h2>Lines</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>VAT amount</th>
+                <th>Total with VAT</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for line in invoice.lines %}
+                <tr>
+                    <td>{{ line.description }}</td>
+                    <td>{{ line.quantity }}</td>
+                    <td>{{ line.amount }}</td>
+                    <td>{{ line.vatAmount }}</td>
+                    <td>{{ line.totalWithVat }}</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5">No lines.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p><a href="{{ path('app_invoice_new') }}">Create another invoice</a></p>
+{% endblock %}
