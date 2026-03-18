@@ -1,6 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 
-const ROW_WRAPPER = '<li class="mb-3"><div class="card border-secondary-subtle"><div class="card-body bg-white">__content__</div></div></li>';
+const ROW_WRAPPER = '<li class="mb-3"><div class="card border-secondary-subtle"><div class="card-body bg-white" data-controller="invoice-line-total">__content__</div></div></li>';
 
 /**
  * Handles dynamic add of invoice line rows in the invoice form.

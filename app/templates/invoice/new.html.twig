@@ -34,7 +34,7 @@
                         {% for line in form.lines %}
                             <li class="mb-3">
                                 <div class="card border-secondary-subtle">
-                                    <div class="card-body bg-white">
+                                    <div class="card-body bg-white" data-controller="invoice-line-total">
                                         {{ form_widget(line) }}
                                     </div>
                                 </div>

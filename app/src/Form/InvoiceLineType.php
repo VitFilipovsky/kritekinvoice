@@ -19,11 +19,12 @@ class InvoiceLineType extends AbstractType
         $builder
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
+                'required' => false,
                 'label_attr' => ['class' => 'form-label fw-semibold'],
                 'attr' => [
                     'class' => 'form-control',
                     'rows' => 2,
-                    'placeholder' => 'Item or service description',
+                    'placeholder' => 'Item or service description (optional)',
                 ],
                 'row_attr' => ['class' => 'col-12 mb-3'],
             ])
@@ -33,6 +34,7 @@ class InvoiceLineType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'min' => 0,
+                    'data-invoice-line-total-target' => 'quantity',
                 ],
                 'row_attr' => ['class' => 'col-md-4 mb-3'],
             ])
@@ -46,6 +48,7 @@ class InvoiceLineType extends AbstractType
                     'step' => '0.01',
                     'min' => '0',
                     'placeholder' => '0.00',
+                    'data-invoice-line-total-target' => 'amount',
                 ],
                 'row_attr' => ['class' => 'col-md-4 mb-3'],
             ])
@@ -59,6 +62,7 @@ class InvoiceLineType extends AbstractType
                     'step' => '0.01',
                     'min' => '0',
                     'placeholder' => '0.00',
+                    'data-invoice-line-total-target' => 'vatAmount',
                 ],
                 'row_attr' => ['class' => 'col-md-4 mb-3'],
             ])
@@ -68,10 +72,9 @@ class InvoiceLineType extends AbstractType
                 'html5' => true,
                 'label_attr' => ['class' => 'form-label fw-semibold'],
                 'attr' => [
-                    'class' => 'form-control',
-                    'step' => '0.01',
-                    'min' => '0',
-                    'placeholder' => '0.00',
+                    'class' => 'form-control bg-light',
+                    'readonly' => true,
+                    'data-invoice-line-total-target' => 'totalWithVat',
                 ],
                 'row_attr' => ['class' => 'col-md-6 mb-0'],
             ])

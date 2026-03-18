@@ -20,7 +20,7 @@ class InvoiceLine
     #[ORM\JoinColumn(nullable: false)]
     private ?Invoice $invoice = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::INTEGER)]
@@ -56,7 +56,7 @@ class InvoiceLine
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
         return $this;

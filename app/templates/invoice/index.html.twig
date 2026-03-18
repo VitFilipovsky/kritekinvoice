@@ -4,20 +4,16 @@
 
 {% block body %}
 <div class="container py-4">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-        <h1 class="h3 mb-0">Invoices</h1>
-        <a href="{{ path('app_invoice_new') }}" class="btn btn-primary">+ New invoice</a>
-    </div>
-
-    {% if invoices is empty %}
-        <div class="card shadow-sm">
-            <div class="card-body text-center text-secondary py-5">
-                <p class="mb-3">No invoices yet.</p>
-                <a href="{{ path('app_invoice_new') }}" class="btn btn-outline-primary">Create first invoice</a>
-            </div>
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h1 class="h4 mb-0">Invoices</h1>
+            <a href="{{ path('app_invoice_new') }}" class="btn btn-light btn-sm">+ New invoice</a>
         </div>
-    {% else %}
-        <div class="card shadow-sm">
+        {% if invoices is empty %}
+            <div class="card-body text-center text-secondary py-5">
+                <p class="mb-0">No invoices yet. Use <strong>+ New invoice</strong> above.</p>
+            </div>
+        {% else %}
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
@@ -43,19 +39,19 @@
                                 <td class="text-end text-nowrap">
                                     <button class="btn btn-sm btn-outline-secondary"
                                             type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#invoice-detail-{{ invoice.id }}"
+                                            data-controller="invoice-detail-toggle"
+                                            data-invoice-detail-toggle-row-id-value="invoice-detail-row-{{ invoice.id }}"
+                                            data-action="click->invoice-detail-toggle#toggle"
                                             aria-expanded="false"
-                                            aria-controls="invoice-detail-{{ invoice.id }}">
+                                            aria-controls="invoice-detail-row-{{ invoice.id }}">
                                         Detail
                                     </button>
                                     <a href="{{ path('app_invoice_show', { id: invoice.id }) }}" class="btn btn-sm btn-outline-primary">Full page</a>
                                 </td>
                             </tr>
-                            <tr class="bg-light">
-                                <td colspan="7" class="p-0 border-0">
-                                    <div class="collapse" id="invoice-detail-{{ invoice.id }}">
-                                    <div class="p-3 border-top">
+                            <tr id="invoice-detail-row-{{ invoice.id }}" class="d-none bg-light">
+                                <td colspan="7" class="p-0 border-top">
+                                    <div class="p-3">
                                         <div class="row g-3 mb-3">
                                             <div class="col-md-4">
                                                 <span class="text-secondary small text-uppercase">Invoice date</span>
@@ -100,14 +96,13 @@
                                             </table>
                                         </div>
                                     </div>
-                                    </div>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
