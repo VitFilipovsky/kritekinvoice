@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Invoices{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <h1 class="h3 mb-0">Invoices</h1>
+        <a href="{{ path('app_invoice_new') }}" class="btn btn-primary">+ New invoice</a>
+    </div>
+
+    {% if invoices is empty %}
+        <div class="card shadow-sm">
+            <div class="card-body text-center text-secondary py-5">
+                <p class="mb-3">No invoices yet.</p>
+                <a href="{{ path('app_invoice_new') }}" class="btn btn-outline-primary">Create first invoice</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Invoice no.</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col" class="text-end">Lines</th>
+                            <th scope="col" class="text-end">Total (incl. VAT)</th>
+                            <th scope="col" class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for invoice in invoices %}
+                            <tr>
+                                <td class="text-secondary">{{ invoice.id }}</td>
+                                <td class="fw-semibold">{{ invoice.invoiceNumber }}</td>
+                                <td>{{ invoice.invoiceDate|date('d.m.Y') }}</td>
+                                <td>{{ invoice.customerId }}</td>
+                                <td class="text-end">{{ invoice.lines|length }}</td>
+                                <td class="text-end font-monospace">{{ invoice.totalWithVatSum|number_format(2, ',', ' ') }}</td>
+                                <td class="text-end text-nowrap">
+                                    <button class="btn btn-sm btn-outline-secondary"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#invoice-detail-{{ invoice.id }}"
+                                            aria-expanded="false"
+                                            aria-controls="invoice-detail-{{ invoice.id }}">
+                                        Detail
+                                    </button>
+                                    <a href="{{ path('app_invoice_show', { id: invoice.id }) }}" class="btn btn-sm btn-outline-primary">Full page</a>
+                                </td>
+                            </tr>
+                            <tr class="bg-light">
+                                <td colspan="7" class="p-0 border-0">
+                                    <div class="collapse" id="invoice-detail-{{ invoice.id }}">
+                                    <div class="p-3 border-top">
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-4">
+                                                <span class="text-secondary small text-uppercase">Invoice date</span>
+                                                <div class="fw-medium">{{ invoice.invoiceDate|date('d.m.Y') }}</div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span class="text-secondary small text-uppercase">Customer ID</span>
+                                                <div class="fw-medium">{{ invoice.customerId }}</div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span class="text-secondary small text-uppercase">Invoice number</span>
+                                                <div class="fw-medium">{{ invoice.invoiceNumber }}</div>
+                                            </div>
+                                        </div>
+                                        <h3 class="h6 text-secondary mb-2">Lines</h3>
+                                        <div class="table-responsive rounded border bg-white">
+                                            <table class="table table-sm table-striped mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Description</th>
+                                                        <th class="text-end">Qty</th>
+                                                        <th class="text-end">Amount</th>
+                                                        <th class="text-end">VAT</th>
+                                                        <th class="text-end">Total w/ VAT</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for line in invoice.lines %}
+                                                        <tr>
+                                                            <td>{{ line.description|nl2br }}</td>
+                                                            <td class="text-end">{{ line.quantity }}</td>
+                                                            <td class="text-end">{{ line.amount }}</td>
+                                                            <td class="text-end">{{ line.vatAmount }}</td>
+                                                            <td class="text-end fw-semibold">{{ line.totalWithVat }}</td>
+                                                        </tr>
+                                                    {% else %}
+                                                        <tr>
+                                                            <td colspan="5" class="text-center text-secondary py-3">No lines</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

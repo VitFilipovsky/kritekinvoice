@@ -19,24 +19,61 @@ class InvoiceLineType extends AbstractType
         $builder
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
+                'label_attr' => ['class' => 'form-label fw-semibold'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'rows' => 2,
+                    'placeholder' => 'Item or service description',
+                ],
+                'row_attr' => ['class' => 'col-12 mb-3'],
             ])
             ->add('quantity', IntegerType::class, [
                 'label' => 'Quantity',
+                'label_attr' => ['class' => 'form-label fw-semibold'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'min' => 0,
+                ],
+                'row_attr' => ['class' => 'col-md-4 mb-3'],
             ])
             ->add('amount', NumberType::class, [
                 'label' => 'Amount',
                 'scale' => 2,
                 'html5' => true,
+                'label_attr' => ['class' => 'form-label fw-semibold'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'step' => '0.01',
+                    'min' => '0',
+                    'placeholder' => '0.00',
+                ],
+                'row_attr' => ['class' => 'col-md-4 mb-3'],
             ])
             ->add('vatAmount', NumberType::class, [
                 'label' => 'VAT amount',
                 'scale' => 2,
                 'html5' => true,
+                'label_attr' => ['class' => 'form-label fw-semibold'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'step' => '0.01',
+                    'min' => '0',
+                    'placeholder' => '0.00',
+                ],
+                'row_attr' => ['class' => 'col-md-4 mb-3'],
             ])
             ->add('totalWithVat', NumberType::class, [
                 'label' => 'Total with VAT',
                 'scale' => 2,
                 'html5' => true,
+                'label_attr' => ['class' => 'form-label fw-semibold'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'step' => '0.01',
+                    'min' => '0',
+                    'placeholder' => '0.00',
+                ],
+                'row_attr' => ['class' => 'col-md-6 mb-0'],
             ])
         ;
     }
@@ -45,6 +82,7 @@ class InvoiceLineType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => InvoiceLine::class,
+            'attr' => ['class' => 'row g-2'],
         ]);
     }
 }

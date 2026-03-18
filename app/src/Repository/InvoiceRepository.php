@@ -17,4 +17,17 @@ class InvoiceRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Invoice::class);
     }
+
+    /**
+     * @return list<Invoice>
+     */
+    public function findAllWithLinesOrdered(): array
+    {
+        return $this->createQueryBuilder('i')
+            ->leftJoin('i.lines', 'l')->addSelect('l')
+            ->orderBy('i.invoiceDate', 'DESC')
+            ->addOrderBy('i.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

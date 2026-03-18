@@ -21,12 +21,29 @@ class InvoiceType extends AbstractType
                 'label' => 'Invoice date',
                 'widget' => 'single_text',
                 'input' => 'datetime_immutable',
+                'label_attr' => ['class' => 'form-label fw-semibold'],
+                'attr' => ['class' => 'form-control'],
+                'row_attr' => ['class' => 'mb-3'],
             ])
             ->add('invoiceNumber', IntegerType::class, [
                 'label' => 'Invoice number',
+                'label_attr' => ['class' => 'form-label fw-semibold'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'min' => 1,
+                    'placeholder' => 'e.g. 1001',
+                ],
+                'row_attr' => ['class' => 'mb-3'],
             ])
             ->add('customerId', IntegerType::class, [
                 'label' => 'Customer ID',
+                'label_attr' => ['class' => 'form-label fw-semibold'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'min' => 1,
+                    'placeholder' => 'Customer ID',
+                ],
+                'row_attr' => ['class' => 'mb-3'],
             ])
             ->add('lines', CollectionType::class, [
                 'label' => 'Invoice lines',
@@ -35,6 +52,8 @@ class InvoiceType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'label_attr' => ['class' => 'form-label fw-semibold fs-5 mt-2'],
+                'row_attr' => ['class' => 'mb-0'],
             ])
         ;
     }
@@ -43,6 +62,10 @@ class InvoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Invoice::class,
+            'attr' => [
+                'class' => 'needs-validation',
+                'novalidate' => 'novalidate',
+            ],
         ]);
     }
 }

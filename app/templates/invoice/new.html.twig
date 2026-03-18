@@ -3,39 +3,56 @@
 {% block title %}New invoice{% endblock %}
 
 {% block body %}
-    <h1>Create invoice</h1>
-
-    {{ form_start(form) }}
-        {{ form_row(form.invoiceDate) }}
-        {{ form_row(form.invoiceNumber) }}
-        {{ form_row(form.customerId) }}
-
-        <h2>Invoice lines</h2>
-        <ul class="invoice-lines" data-prototype="{{ form_widget(form.lines.vars.prototype)|e('html_attr') }}" data-index="{{ form.lines|length }}">
-            {% for line in form.lines %}
-                <li>{{ form_row(line) }}</li>
-            {% endfor %}
-        </ul>
-        <button type="button" class="add-line" data-collection-holder="invoice_lines">Add line</button>
-
-        <div class="form-actions">
-            <button type="submit">Save invoice</button>
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h1 class="h4 mb-0">Create invoice</h1>
+            <a href="{{ path('app_invoice_index') }}" class="btn btn-light btn-sm">All invoices</a>
         </div>
-    {{ form_end(form) }}
+        <div class="card-body">
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-lg-4">
+                        {{ form_row(form.invoiceDate) }}
+                    </div>
+                    <div class="col-lg-4">
+                        {{ form_row(form.invoiceNumber) }}
+                    </div>
+                    <div class="col-lg-4">
+                        {{ form_row(form.customerId) }}
+                    </div>
+                </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const addButton = document.querySelector('.add-line');
-            const list = document.querySelector('.invoice-lines');
-            if (!addButton || !list) return;
+                <hr class="my-4">
 
-            addButton.addEventListener('click', function() {
-                const index = list.dataset.index || list.children.length;
-                const prototype = list.dataset.prototype;
-                const newRow = prototype.replace(/__name__/g, index);
-                list.insertAdjacentHTML('beforeend', '<li>' + newRow + '</li>');
-                list.dataset.index = parseInt(index, 10) + 1;
-            });
-        });
-    </script>
+                <h2 class="h5 text-secondary mb-3">Invoice lines</h2>
+                <div data-controller="invoice-lines">
+                    <ul class="list-unstyled invoice-lines mb-3"
+                        data-invoice-lines-target="list"
+                        data-prototype="{{ form_widget(form.lines.vars.prototype)|e('html_attr') }}"
+                        data-index="{{ form.lines|length }}">
+                        {% for line in form.lines %}
+                            <li class="mb-3">
+                                <div class="card border-secondary-subtle">
+                                    <div class="card-body bg-white">
+                                        {{ form_widget(line) }}
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <button type="button" class="btn btn-outline-primary btn-sm mb-4"
+                            data-invoice-lines-target="addButton">
+                        + Add line
+                    </button>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary btn-lg px-5">Save invoice</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
 {% endblock %}

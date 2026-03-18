@@ -102,4 +102,13 @@ class Invoice
         }
         return $this;
     }
+
+    public function getTotalWithVatSum(): float
+    {
+        $sum = 0.0;
+        foreach ($this->lines as $line) {
+            $sum += (float) ($line->getTotalWithVat() ?? 0);
+        }
+        return $sum;
+    }
 }

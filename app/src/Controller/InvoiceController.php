@@ -22,6 +22,14 @@ class InvoiceController extends AbstractController
     ) {
     }
 
+    #[Route('', name: 'app_invoice_index', methods: ['GET'])]
+    public function index(): Response
+    {
+        return $this->render('invoice/index.html.twig', [
+            'invoices' => $this->invoiceRepository->findAllWithLinesOrdered(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_invoice_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
