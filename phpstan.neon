@@ -1,0 +1,12 @@
+parameters:
+    level: 1
+    phpVersion: 80400 # PHP 8.4
+    tmpDir: ./app/var/cache/phpstan
+    bootstrapFiles:
+        - ./app/vendor/autoload.php
+    excludePaths:
+        analyseAndScan:
+            - ./app/vendor/**
+            - ./app/var/**
+    paths:
+        - ./app/src

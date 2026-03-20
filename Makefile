@@ -38,7 +38,7 @@ phpcs-fix: ## php formating controll run
 	bash docker/phpcs/phpcs-fix.sh
 
 phpstan: ## runs phpstan
-	docker run --rm -v .:/kritekinvoice ghcr.io/phpstan/phpstan analyse -c /kritekinvoice/phpstan.neon /kritekinvoice/src
+	docker run --rm -v .:/kritekinvoice ghcr.io/phpstan/phpstan analyse -c /kritekinvoice/phpstan.neon
 
 cache-clear cc: ## clear Symfony cache (run inside PHP container)
 	docker exec kritekinvoice_php bash -c 'cd /var/www/html/app && php bin/console cache:clear'
