@@ -29,11 +29,11 @@
                 <table class="table table-hover table-striped align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>Description</th>
-                            <th class="text-end">Quantity</th>
-                            <th class="text-end">Amount</th>
-                            <th class="text-end">VAT amount (%)</th>
-                            <th class="text-end">Total with VAT</th>
+                            <th>{{ constant('App\\Form\\InvoiceLineType::LABEL_DESCRIPTION') }}</th>
+                            <th class="text-end">{{ constant('App\\Form\\InvoiceLineType::LABEL_QUANTITY') }}</th>
+                            <th class="text-end">{{ constant('App\\Form\\InvoiceLineType::LABEL_AMOUNT') }}</th>
+                            <th class="text-end">{{ constant('App\\Form\\InvoiceLineType::LABEL_VAT_AMOUNT') }}</th>
+                            <th class="text-end">{{ constant('App\\Form\\InvoiceLineType::LABEL_TOTAL_WITH_VAT') }}</th>
                         </tr>
                     </thead>
                     <tbody>

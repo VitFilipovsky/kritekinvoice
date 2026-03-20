@@ -14,11 +14,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InvoiceLineType extends AbstractType
 {
+    const string INPUT_DESCRIPTION = 'description';
+    const string INPUT_QUANTITY = 'quantity';
+    const string INPUT_AMOUNT = 'amount';
+    const string INPUT_VAT_AMOUNT = 'vatAmount';
+    const string INPUT_TOTAL_WITH_VAT = 'totalWithVat';
+
+    const string LABEL_DESCRIPTION = 'Description';
+    const string LABEL_QUANTITY = 'Quantity';
+    const string LABEL_AMOUNT = 'Amount';
+    const string LABEL_VAT_AMOUNT = 'VAT amount (%)';
+    const string LABEL_TOTAL_WITH_VAT = 'Total with VAT';
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('description', TextareaType::class, [
-                'label' => 'Description',
+            ->add(self::INPUT_DESCRIPTION, TextareaType::class, [
+                'label' => self::LABEL_DESCRIPTION,
                 'required' => false,
                 'label_attr' => ['class' => 'form-label fw-semibold'],
                 'attr' => [
@@ -28,18 +40,18 @@ class InvoiceLineType extends AbstractType
                 ],
                 'row_attr' => ['class' => 'col-12 mb-3'],
             ])
-            ->add('quantity', IntegerType::class, [
-                'label' => 'Quantity',
+            ->add(self::INPUT_QUANTITY, IntegerType::class, [
+                'label' => self::LABEL_QUANTITY,
                 'label_attr' => ['class' => 'form-label fw-semibold'],
                 'attr' => [
                     'class' => 'form-control',
                     'min' => 0,
-                    'data-invoice-line-total-target' => 'quantity',
+                    'data-invoice-line-total-target' => self::INPUT_QUANTITY,
                 ],
                 'row_attr' => ['class' => 'col-md-4 mb-3'],
             ])
-            ->add('amount', NumberType::class, [
-                'label' => 'Amount',
+            ->add(self::INPUT_AMOUNT, NumberType::class, [
+                'label' => self::LABEL_AMOUNT,
                 'scale' => 2,
                 'html5' => true,
                 'label_attr' => ['class' => 'form-label fw-semibold'],
@@ -48,12 +60,12 @@ class InvoiceLineType extends AbstractType
                     'step' => '0.01',
                     'min' => '0',
                     'placeholder' => '0.00',
-                    'data-invoice-line-total-target' => 'amount',
+                    'data-invoice-line-total-target' => self::INPUT_AMOUNT,
                 ],
                 'row_attr' => ['class' => 'col-md-4 mb-3'],
             ])
-            ->add('vatAmount', NumberType::class, [
-                'label' => 'VAT amount',
+            ->add(self::INPUT_VAT_AMOUNT, NumberType::class, [
+                'label' => self::LABEL_VAT_AMOUNT,
                 'scale' => 2,
                 'html5' => true,
                 'label_attr' => ['class' => 'form-label fw-semibold'],
@@ -62,19 +74,19 @@ class InvoiceLineType extends AbstractType
                     'step' => '0.01',
                     'min' => '0',
                     'placeholder' => '0.00',
-                    'data-invoice-line-total-target' => 'vatAmount',
+                    'data-invoice-line-total-target' => self::INPUT_VAT_AMOUNT,
                 ],
                 'row_attr' => ['class' => 'col-md-4 mb-3'],
             ])
-            ->add('totalWithVat', NumberType::class, [
-                'label' => 'Total with VAT',
+            ->add(self::INPUT_TOTAL_WITH_VAT, NumberType::class, [
+                'label' => self::LABEL_TOTAL_WITH_VAT,
                 'scale' => 2,
                 'html5' => true,
                 'label_attr' => ['class' => 'form-label fw-semibold'],
                 'attr' => [
                     'class' => 'form-control bg-light',
                     'readonly' => true,
-                    'data-invoice-line-total-target' => 'totalWithVat',
+                    'data-invoice-line-total-target' => self::INPUT_TOTAL_WITH_VAT,
                 ],
                 'row_attr' => ['class' => 'col-md-6 mb-0'],
             ])
