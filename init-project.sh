@@ -83,3 +83,4 @@ docker exec kritekinvoice_node bash -c 'cd /var/www/html/app && npm run build'
 
 echo ""
 docker ps
+make phpstan
