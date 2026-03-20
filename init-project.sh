@@ -72,8 +72,11 @@ wait_for_container "Node.js" "docker exec kritekinvoice_node node --version"
 
 echo "Project initialized successfully."
 
+echo "Installing composer dependencies..."
+docker exec kritekinvoice_php bash -c 'cd /var/www/html/app && composer install --no-interaction --prefer-dist --optimize-autoloader'
+
 echo "Setting up database..."
-docker exec kritekinvoice_php bash -c 'php app/bin/console doctrine:database:drop --force'
+docker exec kritekinvoice_php bash -c 'php app/bin/console doctrine:database:drop --if-exists --force'
 docker exec kritekinvoice_php bash -c 'php app/bin/console doctrine:database:create'
 docker exec kritekinvoice_php bash -c 'php app/bin/console doctrine:migrations:migrate'
 
@@ -84,3 +87,6 @@ docker exec kritekinvoice_node bash -c 'cd /var/www/html/app && npm run build'
 echo ""
 docker ps
 make phpstan
+echo ""
+echo "Initialization complete. You can access the application at http://localhost"
+
